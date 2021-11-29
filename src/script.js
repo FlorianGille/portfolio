@@ -20,7 +20,8 @@ mesh.position.y = -2
 mesh.position.z = -3
 mesh2.position.x = 0.9
 mesh2.position.y = -0.7
-mesh2.position.z = 0.6
+mesh2.position.z = 0.5
+
 scene.add(mesh, mesh2)
 
 /**
