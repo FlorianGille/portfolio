@@ -6,19 +6,36 @@ const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
+const image = new Image();
+const texture = new THREE.Texture(image);
+
+image.onload = () => {
+  texture.needsUpdate = true;
+};
+
+image.src = "/textures/totor-1.png";
+
+const image2 = new Image();
+const texture2 = new THREE.Texture(image2);
+
+image2.onload = () => {
+    texture2.needsUpdate = true;
+};
+
+image2.src = "/textures/yoann-1.png";
 
 /**
  * Objects
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-const material2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const material = new THREE.MeshBasicMaterial({ map: texture2 });
+const material2 = new THREE.MeshBasicMaterial({ map: texture });
 
 const mesh = new THREE.Mesh(geometry, material);
 const mesh2 = new THREE.Mesh(geometry, material2);
 mesh.position.x = -2;
 mesh.position.y = -2;
-mesh.position.z = -3;
+mesh.position.z = 0.2;
 mesh2.position.x = 0.9;
 mesh2.position.y = -0.7;
 mesh2.position.z = 0.5;
@@ -64,6 +81,8 @@ const tick = () => {
   mesh2.position.y += negative2 ? dirX2 * -1 : dirX2;
   mesh2.position.x += negative2 ? dirX2 * -1 : dirX2;
 
+  mesh2.rotation.x += Math.random() / 10;
+
   camera.updateMatrix();
   camera.updateMatrixWorld();
   frustum.setFromProjectionMatrix(
@@ -75,6 +94,7 @@ const tick = () => {
   if (!frustum.containsPoint(mesh.position)) {
     dirX = Math.random() / 10;
     dirY = Math.random() / 10;
+
     negative = !negative;
   }
   if (!frustum.containsPoint(mesh2.position)) {
